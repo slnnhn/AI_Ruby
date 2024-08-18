@@ -1,0 +1,14 @@
+steps:
+  - name: data_preparation
+    script: prepare_data.py
+    compute: my-compute
+  - name: training
+    script: train.py
+    compute: my-compute
+    inputs:
+      - name: prepared_data
+  - name: evaluation
+    script: evaluate.py
+    compute: my-compute
+    inputs:
+      - name: trained_model

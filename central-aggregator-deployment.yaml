@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: central-aggregator-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: central-aggregator
+  template:
+    metadata:
+      labels:
+        app: central-aggregator
+    spec:
+      containers:
+      - name: central-aggregator
+        image: your_dockerhub_username/central-aggregator:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: PGUSER
+          value: "db_user"
+        - name: PGHOST
+          value: "db_host"
+        - name: PGPASSWORD
+          value: "db_pass"
+        - name: PGDATABASE
+          value: "complaints_db"
+        - name: PGPORT
+          value: "5432"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: central-aggregator-service
+spec:
+  selector:
+    app: central-aggregator
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000

@@ -1,0 +1,9 @@
+name: my-environment
+dependencies:
+  - python=3.8
+  - scikit-learn
+  - pandas
+  - numpy
+  - pip:
+    - azureml-sdk
+    - azureml-dataprep
